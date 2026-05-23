@@ -1,26 +1,190 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card-bg: #ffffff;
+  --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  --card-hover: 0 8px 25px rgba(0, 0, 0, 0.12);
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --border: #e2e8f0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark mode (opzionale - si attiva con class="dark" su <html>) */
+.dark {
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  --card-bg: #1e293b;
+  --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  --border: #334155;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: background 0.3s, color 0.3s;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Card moderne */
+.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--card-hover);
+}
+
+/* Gradienti per le card */
+.card-gradient-expense {
+  background: linear-gradient(135deg, #fef2f2 0%, #fff 100%);
+  border-left: 4px solid var(--danger);
+}
+.card-gradient-income {
+  background: linear-gradient(135deg, #f0fdf4 0%, #fff 100%);
+  border-left: 4px solid var(--success);
+}
+.card-gradient-saving {
+  background: linear-gradient(135deg, #fefce8 0%, #fff 100%);
+  border-left: 4px solid var(--warning);
+}
+.card-gradient-balance {
+  background: linear-gradient(135deg, #f0f9ff 0%, #fff 100%);
+  border-left: 4px solid var(--primary);
+}
+
+/* Form styling */
+.input-field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  color: var(--foreground);
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* Button moderno */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Animazioni */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-fade-in-delay {
+  animation: fadeIn 0.4s ease-out 0.1s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fadeIn 0.4s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+/* Grafici Recharts - fix dimensioni */
+.recharts-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+}
+.recharts-surface {
+  overflow: visible;
+}
+
+/* Tooltip personalizzato per grafici */
+.custom-tooltip {
+  background: var(--card-bg);
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+/* Scrollbar personalizzata */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Utilità */
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary), #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border), transparent);
+  margin: 1.5rem 0;
 }

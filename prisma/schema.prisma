@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  type      String
+  color     String   @default("#6366f1")
+  createdAt DateTime @default(now())
+  transactions Transaction[]
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  date        DateTime @default(now())
+  amount      Float
+  type        String
+  note        String?
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  isRecurring Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model SavingsGoal {
+  id           String   @id @default(uuid())
+  name         String
+  targetAmount Float
+  currentAmount Float  @default(0)
+  deadline     DateTime?
+  createdAt    DateTime @default(now())
+}
